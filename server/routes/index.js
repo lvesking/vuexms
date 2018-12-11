@@ -37,5 +37,22 @@ router.get('/getuserlist',(req,res) => {
 });
 		
 
-
+/* 修改密码. */
+router.post('/updatePwd', (req, res) => {
+		//接收用户名的密码
+		let {username,pass,oldPass}=req.body;
+		const sql=`update users set password='${pass}' where username='${username}' and password='${oldPass}'`;
+		connection.query(sql,(err,data) => {
+			if(err){
+				throw err;
+			}else{
+				if(data.affectedRows>0){
+					res.send("1");
+				}else{
+					res.send("0");
+				}
+			}
+		});
+		
+});
 module.exports = router;
